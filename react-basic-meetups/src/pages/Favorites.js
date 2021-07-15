@@ -1,9 +1,5 @@
-import {
-  useContext
-} from "react";
-import {
-  motion
-} from 'framer-motion';
+import {useContext} from "react";
+import {motion} from "framer-motion";
 
 import FavoritesContext from "../store/favorites-context";
 import MeetupList from "../components/meetups/MeetupList";
@@ -20,7 +16,12 @@ function FavoritesPage() {
   }
 
   return (
-    <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} transition={{duration:0.5}}>
+    <motion.div
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+      transition={{duration: 0.5}}
+    >
       <section>
         <h1>My Favorites</h1>
         {content}
