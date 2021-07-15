@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "./useForm";
 
 const App = () => {
   const [count, setCount] = useState(10);
@@ -8,6 +9,7 @@ const App = () => {
   });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [values, handleChange] = useForm({ email2: "", password2: "" });
 
   return (
     <>
@@ -70,21 +72,17 @@ const App = () => {
         </div>
         <div>
           4th example (with custom hook): <br />
-          <input
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input name="email2" value={values.email2} onChange={handleChange} />
           <input
             type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password2"
+            value={values.password2}
+            onChange={handleChange}
           />
           <br />
-          {email}
+          {values.email2}
           <br />
-          {password}
+          {values.password2}
         </div>
       </div>
     </>
