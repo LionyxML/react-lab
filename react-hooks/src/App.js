@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Hello } from "./Hello";
 import { useFetch } from "./useFecth";
 import { useForm } from "./useForm";
+import { Hello2 } from "./Hello2";
 
 const App = () => {
   // useState
@@ -67,6 +68,11 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("count4", JSON.stringify(count4));
   }, [count4]);
+
+  // useRef
+
+  const inputRef = useRef();
+  const helloThere = useRef(() => console.log("I am a function from a ref!"));
 
   return (
     <>
@@ -153,6 +159,20 @@ const App = () => {
         <br />
         <button onClick={() => setCount4(count4 + 1)}>+</button>
         <button onClick={() => setCount4(count4 - 1)}>-</button>
+      </div>
+      <div>
+        <h2>useRef</h2>
+        <input ref={inputRef} name="nome"></input>
+        <button
+          onClick={() => {
+            inputRef.current.focus();
+            helloThere.current();
+          }}
+        >
+          Focus
+        </button>
+        <hr />
+        <Hello2 />
       </div>
     </>
   );
