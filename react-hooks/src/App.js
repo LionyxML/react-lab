@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Hello } from "./Hello";
+import { useFetch } from "./useFecth";
 import { useForm } from "./useForm";
 
 const App = () => {
+  // useState
   const [count, setCount] = useState(10);
   const [{ count2, count3 }, setCounters] = useState({
     count2: 10,
@@ -9,7 +12,61 @@ const App = () => {
   });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [values, handleChange] = useForm({ email2: "", password2: "" });
+  const [values, handleChange] = useForm({
+    email2: "",
+    password2: "",
+    firstName2: "",
+  });
+
+  // useEffect
+  useEffect(() => {
+    console.log("useEffect: render when email2 is loaded / changed");
+  }, [values.email2]);
+
+  useEffect(() => {
+    console.log("useEffect: renders when loaded (like component did mount)");
+  }, []);
+
+  useEffect(() => {
+    console.log(
+      "useEffect: render when it is unmounted (like component did unmount)"
+    );
+  }, []);
+  // ---
+
+  const [showHello, setShowHello] = useState(false);
+  // ---
+
+  const [mousePos, setMousePos] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      setMousePos({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    // ---
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+  });
+  // ---
+
+  const [count4, setCount4] = useState(
+    () => JSON.parse(localStorage.getItem("count4")) || 42
+  );
+  const { data, loading } = useFetch(`http://numbersapi.com/${count4}/trivia`);
+  // ---
+
+  useEffect(() => {
+    localStorage.setItem("count4", JSON.stringify(count4));
+  }, [count4]);
 
   return (
     <>
@@ -84,6 +141,18 @@ const App = () => {
           <br />
           {values.password2}
         </div>
+      </div>
+      <div>
+        <h2>ueEffect</h2>
+        {showHello && <Hello />}
+        <button onClick={() => setShowHello(!showHello)}>Show/Hide</button>
+        <hr />
+        Mouse position. X: {mousePos.x} / Y: {mousePos.y}
+        <hr />
+        {loading ? "Loading..." : data}
+        <br />
+        <button onClick={() => setCount4(count4 + 1)}>+</button>
+        <button onClick={() => setCount4(count4 - 1)}>-</button>
       </div>
     </>
   );
