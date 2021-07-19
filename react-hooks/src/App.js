@@ -5,6 +5,7 @@ import { useForm } from "./useForm";
 import { Hello2 } from "./Hello2";
 import { useMeasure } from "./useMeasure";
 import { useMeasure2 } from "./useMeasure2";
+import { Hello3 } from "./Hello3";
 
 const App = () => {
   // useState
@@ -95,6 +96,9 @@ const App = () => {
 
   // Or even better, passing only the data
   const [rect3, inputRef2] = useMeasure2([]);
+
+  // useCallback
+  const [count5, setCount5] = useState(0);
 
   return (
     <>
@@ -206,6 +210,11 @@ const App = () => {
         <pre>{JSON.stringify(rect2, null, 2)}</pre>
         <br />
         <pre>{JSON.stringify(rect3, null, 2)}</pre>
+      </div>
+      <div>
+        <h2>useCallBack</h2>
+        <Hello3 increment={() => setCount5(count5 + 1)} />
+        <div>count: {count5}</div>
       </div>
     </>
   );
