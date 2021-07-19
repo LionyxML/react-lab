@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { Hello } from "./Hello";
 import { useFetch } from "./useFecth";
 import { useForm } from "./useForm";
 import { Hello2 } from "./Hello2";
+import { useMeasure } from "./useMeasure";
+import { useMeasure2 } from "./useMeasure2";
 
 const App = () => {
   // useState
@@ -74,6 +76,26 @@ const App = () => {
   const inputRef = useRef();
   const helloThere = useRef(() => console.log("I am a function from a ref!"));
 
+  // useLayoutEffect (recommended only if useEffect couses problems)
+  // it IS useEffect, but syncrhonous after all DOM is loaded.
+  // Cool if you wanna measure a box or element after rendering
+
+  useLayoutEffect(() => {
+    // console.log(inputRef.current.getBoundingClientRect());
+  });
+
+  const [rect, setRect] = useState({});
+  const divRef = useRef();
+  useLayoutEffect(() => {
+    setRect(divRef.current.getBoundingClientRect());
+  }, [data, setRect]);
+
+  // Creating a custom hook to do so...
+  const rect2 = useMeasure(divRef, [data]);
+
+  // Or even better, passing only the data
+  const [rect3, inputRef2] = useMeasure2([]);
+
   return (
     <>
       <div>
@@ -120,6 +142,7 @@ const App = () => {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            ref={inputRef2}
           />
           <input
             type="password"
@@ -149,13 +172,15 @@ const App = () => {
         </div>
       </div>
       <div>
-        <h2>ueEffect</h2>
+        <h2>useEffect</h2>
         {showHello && <Hello />}
         <button onClick={() => setShowHello(!showHello)}>Show/Hide</button>
         <hr />
         Mouse position. X: {mousePos.x} / Y: {mousePos.y}
         <hr />
-        {loading ? "Loading..." : data}
+        <div ref={divRef} style={{ display: "inline-flex" }}>
+          {loading ? "Loading..." : data}
+        </div>
         <br />
         <button onClick={() => setCount4(count4 + 1)}>+</button>
         <button onClick={() => setCount4(count4 - 1)}>-</button>
@@ -173,6 +198,14 @@ const App = () => {
         </button>
         <hr />
         <Hello2 />
+      </div>
+      <div>
+        <h2>useLayoutEffect</h2>
+        <pre>{JSON.stringify(rect, null, 2)}</pre>
+        <br />
+        <pre>{JSON.stringify(rect2, null, 2)}</pre>
+        <br />
+        <pre>{JSON.stringify(rect3, null, 2)}</pre>
       </div>
     </>
   );
