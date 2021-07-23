@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { Hello } from "./Hello";
 import { useFetch } from "./useFecth";
 import { useForm } from "./useForm";
@@ -99,6 +105,10 @@ const App = () => {
 
   // useCallback
   const [count5, setCount5] = useState(0);
+
+  const increment = useCallback(() => {
+    setCount5((c) => c + 1);
+  }, [setCount5]);
 
   return (
     <>
@@ -213,8 +223,9 @@ const App = () => {
       </div>
       <div>
         <h2>useCallBack</h2>
-        <Hello3 increment={() => setCount5(count5 + 1)} />
+        <Hello3 increment={increment} />
         <div>count: {count5}</div>
+        <hr />
       </div>
     </>
   );
