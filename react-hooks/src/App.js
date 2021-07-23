@@ -4,6 +4,7 @@ import React, {
   useRef,
   useLayoutEffect,
   useCallback,
+  useMemo,
 } from "react";
 import { Hello } from "./Hello";
 import { useFetch } from "./useFecth";
@@ -104,11 +105,61 @@ const App = () => {
   const [rect3, inputRef2] = useMeasure2([]);
 
   // useCallback
+  // Important when you don`t want to re-fire triggers with your function
   const [count5, setCount5] = useState(0);
 
   const increment = useCallback(() => {
     setCount5((c) => c + 1);
   }, [setCount5]);
+
+  // useMemo
+  // Start without and if something is really slow, start memoing.
+  // It only re-renders the component when some condition is met and not after
+  // every parent change
+
+  // This example have a counter and whenever it changes, the fetch function fetchs
+  // and counts longest word of list. Memo is there to prevent it from rendering again
+  // when counter changes
+
+  const [count6, setCount6] = useState(0);
+  const data2 = useFetch(
+    "https://raw.githubusercontent.com/ajzbc/kanye.rest/master/quotes.json"
+  ).data;
+
+  const computeLongestWord = useCallback((arr) => {
+    if (!arr) {
+      return [];
+    }
+
+    console.log("computing longest word...");
+
+    let longestWord = "";
+
+    JSON.parse(arr).forEach((sentence) =>
+      sentence.split(" ").forEach((word) => {
+        if (word.length > longestWord.length) {
+          longestWord = word;
+        }
+      })
+    );
+
+    return longestWord;
+  }, []);
+
+  // Abaixo a função computeLongestWord atualiza sempre, se for retirada
+  // da dependencia do use memo, seria bem melhor! Mas não é legal retirar
+  // se é necessária e tem esse problema, enviar para fora da função App.
+  // Do contrário, usar o useCallback (se for para manter dentro do componente)
+  // WTF? AM I speaking Portuguese now?
+  // const longestWord = useMemo(
+  //   () => computeLongestWord(data2),
+  //   [data2, computeLongestWord]
+  // );
+
+  const longestWord = useMemo(
+    () => computeLongestWord(data2),
+    [data2, computeLongestWord]
+  );
 
   return (
     <>
@@ -226,6 +277,18 @@ const App = () => {
         <Hello3 increment={increment} />
         <div>count: {count5}</div>
         <hr />
+      </div>
+      <div>
+        <h2>useMemo</h2>
+        <div>count: {count6}</div>
+        <button
+          onClick={() => {
+            setCount6((c) => c + 1);
+          }}
+        >
+          +1
+        </button>
+        <div>Longest word: {longestWord}</div>
       </div>
     </>
   );
