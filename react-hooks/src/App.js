@@ -5,6 +5,7 @@ import React, {
   useLayoutEffect,
   useCallback,
   useMemo,
+  useReducer,
 } from "react";
 import { Hello } from "./Hello";
 import { useFetch } from "./useFecth";
@@ -13,6 +14,36 @@ import { Hello2 } from "./Hello2";
 import { useMeasure } from "./useMeasure";
 import { useMeasure2 } from "./useMeasure2";
 import { Hello3 } from "./Hello3";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return state + 1; // Not to use state++, but create a new state
+    case "DECREMENT":
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+function reducer2(state, action) {
+  switch (action.type) {
+    case "add-todo":
+      return {
+        todos: [...state.todos, { text: action.text, completed: false }],
+        todoCount: state.todoCount + 1,
+      };
+    case "toggle-todo":
+      return {
+        todos: state.todos.map((t, idx) =>
+          idx === action.idx ? { ...t, completed: !t.completed } : t
+        ),
+        todoCount: state.todoCount,
+      };
+    default:
+      return state;
+  }
+}
 
 const App = () => {
   // useState
@@ -161,6 +192,20 @@ const App = () => {
     [data2, computeLongestWord]
   );
 
+  // useReducer
+  // A kind of useState. Use it if your state gets complex. If it is
+  // simple, use useState. If it is complex and between components, you may
+  // use a library like redux.
+  // When using large states with something imutable state, use use-immer library.
+
+  const [count7, dispatch] = useReducer(reducer, 0);
+
+  const [{ todos, todoCount }, dispatch2] = useReducer(reducer2, {
+    todos: [],
+    todoCount: 0,
+  });
+  const [text, setText] = useState();
+
   return (
     <>
       <div>
@@ -289,6 +334,41 @@ const App = () => {
           +1
         </button>
         <div>Longest word: {longestWord}</div>
+      </div>
+      <div>
+        <h2>useReducer</h2>
+        <div>count: {count7}</div>
+        <button onClick={() => dispatch({ type: "INCREMENT" })}>
+          increment
+        </button>
+        <button onClick={() => dispatch({ type: "DECREMENT" })}>
+          decrement
+        </button>
+        <hr />
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              dispatch2({ type: "add-todo", text });
+              setText("");
+            }}
+          >
+            <input value={text} onChange={(e) => setText(e.target.value)} />
+          </form>
+          <pre>{JSON.stringify(todos, null, 2)}</pre>
+          {todos.map((t, idx) => (
+            <div
+              key={t.text}
+              style={{
+                textDecoration: t.completed ? "line-through" : "",
+              }}
+              onClick={() => dispatch2({ type: "toggle-todo", idx })}
+            >
+              {t.text}
+            </div>
+          ))}
+          <div>Number of todos: {todoCount}</div>
+        </div>
       </div>
     </>
   );
