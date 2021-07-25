@@ -15,6 +15,15 @@ import { useMeasure } from "./useMeasure";
 import { useMeasure2 } from "./useMeasure2";
 import { Hello3 } from "./Hello3";
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Index } from "./pages";
+import { About } from "./pages/about";
+import { UserContext } from "./UserContext";
+
+import { Index2 } from "./pages/index2";
+import { About2 } from "./pages/about2";
+import { UserContext2 } from "./UserContext2";
+
 function reducer(state, action) {
   switch (action.type) {
     case "INCREMENT":
@@ -206,6 +215,12 @@ const App = () => {
   });
   const [text, setText] = useState();
 
+  // useContext
+  const [value, setValue] = useState("hello from context!");
+
+  const [user, setUser] = useState(null);
+  const value2 = useMemo(() => ({ user, setUser }), [user, setUser]);
+
   return (
     <>
       <div>
@@ -369,6 +384,48 @@ const App = () => {
           ))}
           <div>Number of todos: {todoCount}</div>
         </div>
+      </div>
+      <div>
+        <h2>useContext</h2>
+        <Router>
+          <div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/about/">About</Link>
+                </li>
+              </ul>
+            </nav>
+
+            <UserContext.Provider value={{ value, setValue }}>
+              <Route path="/" exact component={Index} />
+              <Route path="/about" component={About} />
+            </UserContext.Provider>
+          </div>
+        </Router>
+        <hr />
+        <Router>
+          <div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/index2">Home</Link>
+                </li>
+                <li>
+                  <Link to="/about2">About</Link>
+                </li>
+              </ul>
+            </nav>
+
+            <UserContext2.Provider value={value2}>
+              <Route path="/index2" exact component={Index2} />
+              <Route path="/about2" component={About2} />
+            </UserContext2.Provider>
+          </div>
+        </Router>
       </div>
     </>
   );
