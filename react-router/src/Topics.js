@@ -28,6 +28,12 @@ function Topics() {
   return (
     <div>
       <h1>TOPICS</h1>
+      <p>
+        This route gets an URL Param and prints here. Try using{" "}
+        <a href="http://localhost:3000/topics/eyJmaXJzdCI6ImhlbGxvIiwibGFzdCI6Imdvb2RieWUifQ">
+          localhost:3000/topics/eyJmaXJzdCI6ImhlbGxvIiwibGFzdCI6Imdvb2RieWUifQ
+        </a>
+      </p>
       <p>Received: </p>
       <pre>{data}</pre>
       {decodedData === "" ? (

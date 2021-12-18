@@ -15,6 +15,9 @@ function App() {
           <li>
             <Link to="/topics">Topics</Link>
           </li>
+          <li>
+            <Link to="/topicsquerystring">Topics With QueryString</Link>
+          </li>
         </ul>
       </div>
     </div>
