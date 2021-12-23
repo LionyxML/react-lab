@@ -5,7 +5,11 @@ import { TextField } from "./TextField";
 const App: React.FC = () => {
   return (
     <div>
-      <TextField text="Hello!" />
+      <TextField
+        text="Hello!"
+        person={{ firstName: "foo", lastName: "bar" }}
+        handleChange={(e) => e.target}
+      />
     </div>
   );
 };
