@@ -24,13 +24,13 @@ interface TextNode {
 
 export const TextField: React.FC<Props> = ({ handleChange }) => {
   const [countA, setCountA] = useState<number | null | undefined | string>(5);
-  setCountA(null);
+  // setCountA(null);
 
   const [countB, setCountB] = useState<{ text: string }>({ text: "hello" });
-  setCountB({ text: "goodbye" });
+  // setCountB({ text: "goodbye" });
 
   const [countC, setCountC] = useState<TextNode>({ text: "hello" });
-  setCountC({ text: "goodbye" });
+  // setCountC({ text: "goodbye" });
 
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
