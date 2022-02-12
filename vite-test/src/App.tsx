@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { ImgHTMLAttributes, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -21,18 +21,22 @@ const ColorPicker = React.lazy(() => import("./components/ColorPicker"));
 // var QRCode = require("qrcode.react");
 import QRCode from "qrcode.react";
 
-const teste = {
-    foo: "bar"
-}
-
-
-
 function App() {
   const PICT_DEFAULT_SIZE = 300;
   const PICT_MIN_SIZE = 150;
   const PICT_MAX_SIZE = 400;
   const [originalString, setOriginalString] = useState("");
-  const [foregroundColor, setForegroundColor] = useState({
+
+  interface colorType {
+    rgb: {
+      r: number;
+      g: number;
+      b: number;
+      a: number;
+    };
+  }
+
+  const [foregroundColor, setForegroundColor] = useState<colorType>({
     rgb: {
       r: 0,
       g: 128,
@@ -52,7 +56,7 @@ function App() {
   const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
   const [pictureSize, setPictureSize] = useState(PICT_DEFAULT_SIZE);
   const [margin, setMargin] = useState(true);
-  const QRCodeRef = useRef(null);
+  const QRCodeRef = useRef<HTMLDivElement | undefined>(null);
 
   const handleOpenFg = () => {
     setDisplayFgColorPicker(true);
@@ -62,7 +66,7 @@ function App() {
     setDisplayFgColorPicker(false);
   };
 
-  const handleFgChange = (color) => {
+  const handleFgChange = (color: colorType) => {
     setForegroundColor(color);
   };
 
@@ -74,19 +78,21 @@ function App() {
     setDisplayBgColorPicker(false);
   };
 
-  const handleBgChange = (color) => {
+  const handleBgChange = (color: colorType) => {
     setBackroundColor(color);
   };
 
-  const handlePictureSizeChange = (event, newSize) => {
-    setPictureSize(newSize);
+  const handlePictureSizeChange = (value: number): void => {
+    setPictureSize(value);
   };
 
-  const handleMarginChange = (event) => {
+  const handleMarginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMargin(event.target.checked);
   };
 
   const QRCanvas = QRCodeRef.current?.children[0];
+
+  // @ts-ignore
   const QRImg = QRCanvas?.toDataURL("image/png");
 
   const styles = reactCSS({
@@ -198,6 +204,7 @@ function App() {
               min={PICT_MIN_SIZE}
               max={PICT_MAX_SIZE}
               value={typeof pictureSize === "number" ? pictureSize : 0}
+              /* @ts-ignore */
               onChange={handlePictureSizeChange}
               aria-labelledby="input-slider"
               style={{ color: "green" }}
@@ -207,7 +214,6 @@ function App() {
               <FormControlLabel
                 control={
                   <Switch
-                    label="uhu"
                     checked={margin}
                     onChange={handleMarginChange}
                     color="success"
@@ -223,15 +229,19 @@ function App() {
               </div>
 
               {displayFgColorPicker ? (
-                <div style={styles.popover}>
-                  <div style={styles.cover} onClick={handleCloseFg} />
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <ColorPicker
-                      color={foregroundColor}
-                      onChange={handleFgChange}
-                    />
-                  </Suspense>
-                </div>
+                <>
+                  {/* @ts-ignore */}
+                  <div style={styles.popover}>
+                    {/* @ts-ignore */}
+                    <div style={styles.cover} onClick={handleCloseFg} />
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <ColorPicker
+                        color={foregroundColor}
+                        onChange={handleFgChange}
+                      />
+                    </Suspense>
+                  </div>
+                </>
               ) : null}
             </div>
 
@@ -242,19 +252,24 @@ function App() {
                 <div style={styles.bgColor} />
               </div>
               {displayBgColorPicker ? (
-                <div style={styles.popover}>
-                  <div style={styles.cover} onClick={handleCloseBg} />
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <ColorPicker
-                      color={backgroundColor}
-                      onChange={handleBgChange}
-                    />
-                  </Suspense>
-                </div>
+                <>
+                  {/* @ts-ignore */}
+                  <div style={styles.popover}>
+                    {/* @ts-ignore */}
+                    <div style={styles.cover} onClick={handleCloseBg} />
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <ColorPicker
+                        color={backgroundColor}
+                        onChange={handleBgChange}
+                      />
+                    </Suspense>
+                  </div>
+                </>
               ) : null}
             </div>
           </Box>
           <Box>
+            {/* @ts-ignore */}
             <div ref={QRCodeRef}>
               <QRCode
                 value={originalString}
