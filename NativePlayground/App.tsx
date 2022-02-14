@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -19,13 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Header from './components/Header/Header';
 
 const Section: React.FC<{
   title: string;
@@ -37,7 +21,7 @@ const Section: React.FC<{
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: isDarkMode ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)',
           },
         ]}>
         {title}
@@ -46,7 +30,7 @@ const Section: React.FC<{
         style={[
           styles.sectionDescription,
           {
-            color: isDarkMode ? Colors.light : Colors.dark,
+            color: isDarkMode ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)',
           },
         ]}>
         {children}
@@ -59,7 +43,7 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)',
   };
 
   return (
@@ -71,22 +55,19 @@ const App = () => {
         <Header />
         <View
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            backgroundColor: isDarkMode
+              ? 'rgba(0,0,0,0.7)'
+              : 'rgba(255,255,255,0.9)',
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="Bem vindo!">
+            Esse é um programa playground com{' '}
+            <Text style={styles.highlight}>Exemplos!</Text>
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="Começando...">
+            Vamos começar mostrando sections! Essa é uma section! Você pode ver
+            que é um componente criado ali em cima, na verdade junstamos Views e
+            Texts com Styles
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -101,6 +82,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
+    paddingLeft: 12,
   },
   sectionDescription: {
     marginTop: 8,
