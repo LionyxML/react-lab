@@ -45,6 +45,7 @@ const Section: React.FC<{
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPressed, setIsPressed] = useState(false);
+  const [text, setText] = useState('');
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)',
@@ -72,7 +73,7 @@ const App = () => {
             que é um componente criado ali em cima, na verdade junstamos Views e
             Texts com Styles
           </Section>
-          <Section title="Using a TextInput">
+          <Section title="TextInput">
             <TextInput
               style={{
                 height: 30,
@@ -80,7 +81,8 @@ const App = () => {
                 borderColor: 'gray',
                 borderWidth: 2,
               }}
-              defaultValue="Input here!"
+              placeholder="digite aqui!"
+              value="digite aqui!"
             />
           </Section>
           <Section title="Using Image">
@@ -94,9 +96,37 @@ const App = () => {
           </Section>
           <Section title="State && Button">
             <View>
-              <Text>O botão está: {isPressed ? 'solto' : 'pressionado'}</Text>
+              <Text>O botão está: {isPressed ? 'presionado' : 'solto'}</Text>
               <Button onPress={() => setIsPressed(true)} title="Me aperta" />
             </View>
+          </Section>
+          <Section title="Usando o TextInput">
+            <View style={{padding: 10}}>
+              <TextInput
+                style={{height: 40}}
+                placeholder="Digite aqui para palavras virarem pizza"
+                onChangeText={newText => setText(newText)}
+                defaultValue={text}
+              />
+              <Text style={{padding: 10, fontSize: 42}}>
+                {text
+                  .split(' ')
+                  .map(word => word && '🍕') /* There's a pizza char here */
+                  .join(' ')}
+              </Text>
+            </View>
+          </Section>
+          <Section title="ScrollView">
+            <ScrollView>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+              <Text>rolagem 1</Text>
+            </ScrollView>
+            {/* Continue from here: https://reactnative.dev/docs/using-a-listview */}
           </Section>
         </View>
       </ScrollView>
