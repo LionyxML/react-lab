@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  Button,
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   useColorScheme,
   View,
 } from 'react-native';
@@ -41,6 +44,7 @@ const Section: React.FC<{
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [isPressed, setIsPressed] = useState(false);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)',
@@ -67,6 +71,32 @@ const App = () => {
             Vamos começar mostrando sections! Essa é uma section! Você pode ver
             que é um componente criado ali em cima, na verdade junstamos Views e
             Texts com Styles
+          </Section>
+          <Section title="Using a TextInput">
+            <TextInput
+              style={{
+                height: 30,
+                width: '100%',
+                borderColor: 'gray',
+                borderWidth: 2,
+              }}
+              defaultValue="Input here!"
+            />
+          </Section>
+          <Section title="Using Image">
+            <Image
+              source={{uri: 'https://picsum.photos/200/'}}
+              style={{
+                width: 200,
+                height: 200,
+              }}
+            />
+          </Section>
+          <Section title="State && Button">
+            <View>
+              <Text>O botão está: {isPressed ? 'solto' : 'pressionado'}</Text>
+              <Button onPress={() => setIsPressed(true)} title="Me aperta" />
+            </View>
           </Section>
         </View>
       </ScrollView>
