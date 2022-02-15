@@ -11,8 +11,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
 import Header from './components/Header/Header';
+import CustomFlatList from './components/CustomFlatList/CustomFlatList';
 
 const Section: React.FC<{
   title: string;
@@ -126,9 +126,13 @@ const App = () => {
               <Text>rolagem 1</Text>
               <Text>rolagem 1</Text>
             </ScrollView>
-            {/* Continue from here: https://reactnative.dev/docs/using-a-listview */}
           </Section>
         </View>
+        <Section title="FlatList">
+          Nothing to see here? Yep. No Flat lists can be inside a ScrollView, so
+          the component is commented.
+          {/*<CustomFlatList /> */}
+        </Section>
       </ScrollView>
     </SafeAreaView>
   );
