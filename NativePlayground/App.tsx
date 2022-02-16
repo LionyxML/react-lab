@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import Header from './components/Header/Header';
 import CustomFlatList from './components/CustomFlatList/CustomFlatList';
+import Touchables from './components/Touchables/Touchables';
 
 const Section: React.FC<{
   title: string;
@@ -132,6 +133,38 @@ const App = () => {
           Nothing to see here? Yep. No Flat lists can be inside a ScrollView, so
           the component is commented.
           {/*<CustomFlatList /> */}
+        </Section>
+        <Section title="Button Land!">
+          <Button
+            onPress={() => {
+              alert('Apertou o botão!');
+            }}
+            title="Me aperta!"
+          />
+          <Button
+            onPress={() => {
+              alert('Apertou o botão!');
+            }}
+            title="Me aperta!"
+            color="#841584"
+          />
+          <Button
+            onPress={() => {
+              alert('Apertou o botão!');
+            }}
+            title="Me aperta!"
+            color="#008800"
+          />
+          <Button
+            onPress={() => {
+              alert('Apertou o botão!');
+            }}
+            title="Me aperta!"
+            color="lightgreen"
+          />
+        </Section>
+        <Section title="Touchables">
+          <Touchables />
         </Section>
       </ScrollView>
     </SafeAreaView>
