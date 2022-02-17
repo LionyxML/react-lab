@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {
   Button,
   Image,
@@ -11,8 +10,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import React, {useState} from 'react';
+
 import Header from './components/Header/Header';
-import CustomFlatList from './components/CustomFlatList/CustomFlatList';
 import Touchables from './components/Touchables/Touchables';
 
 const Section: React.FC<{
@@ -132,7 +132,7 @@ const App = () => {
         <Section title="FlatList">
           Nothing to see here? Yep. No Flat lists can be inside a ScrollView, so
           the component is commented.
-          {/*<CustomFlatList /> */}
+         { /* <CustomFlatList /> */}
         </Section>
         <Section title="Button Land!">
           <Button
