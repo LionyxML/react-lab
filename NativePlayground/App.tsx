@@ -132,7 +132,7 @@ const App = () => {
         <Section title="FlatList">
           Nothing to see here? Yep. No Flat lists can be inside a ScrollView, so
           the component is commented.
-         { /* <CustomFlatList /> */}
+          {/* <CustomFlatList /> */}
         </Section>
         <Section title="Button Land!">
           <Button
