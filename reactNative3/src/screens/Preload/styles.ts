@@ -12,3 +12,7 @@ export const Title = styled.Text`
   font-family: 'Lobster-Regular';
   color: ${({theme}) => theme.colors.white};
 `;
+
+export const LoadingIcon = styled.ActivityIndicator`
+  margin-top: 200px;
+`;
