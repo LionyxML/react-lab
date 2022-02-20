@@ -1,11 +1,10 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {Container} from './styles';
+import {Container, Title} from './styles';
 
 export const Preload = () => {
   return (
     <Container>
-      <Text>PreloaderScreen</Text>
+      <Title>Your ZaZen App</Title>
     </Container>
   );
 };

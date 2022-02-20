@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 export default () => {
   return (
     <Stack.Navigator
+      initialRouteName="Preload"
       screenOptions={{
         headerShown: false,
       }}>
