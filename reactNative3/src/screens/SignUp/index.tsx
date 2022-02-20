@@ -16,6 +16,7 @@ import {
 } from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {StyleProp, ViewStyle} from 'react-native';
 
 export const SignUp = () => {
   const [emailField, setEmailField] = useState('');
@@ -29,12 +30,19 @@ export const SignUp = () => {
     navigation.reset({routes: [{name: 'SignIn'}]});
   };
 
+  const keyboardContainerStyle: StyleProp<ViewStyle> = {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
   return (
     <Container>
-      <ZazenLogo width="140px" height="150px" fill="#FFF" />
-      <Title>zaZen</Title>
-      <InputArea>
-        <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView contentContainerStyle={keyboardContainerStyle}>
+        <ZazenLogo width="140px" height="150px" fill="#FFF" />
+        <Title>zaZen</Title>
+        <InputArea>
           <SignInput
             SvgIcon={PersonIcon}
             placeholder="Digite o seu nome"
@@ -57,13 +65,13 @@ export const SignUp = () => {
           <CustomButton onPress={handleSignInButtonClick}>
             <CustomButtomText>CADASTRAR</CustomButtomText>
           </CustomButton>
-        </KeyboardAwareScrollView>
-      </InputArea>
+        </InputArea>
 
-      <SignMessageButton onPress={handleMessageButtonClick}>
-        <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
-        <SignMessageButtonTextBold>Faça login.</SignMessageButtonTextBold>
-      </SignMessageButton>
+        <SignMessageButton onPress={handleMessageButtonClick}>
+          <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
+          <SignMessageButtonTextBold>Faça login.</SignMessageButtonTextBold>
+        </SignMessageButton>
+      </KeyboardAwareScrollView>
     </Container>
   );
 };
