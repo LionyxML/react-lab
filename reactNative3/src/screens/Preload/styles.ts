@@ -8,6 +8,7 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Title = styled.Text`
-  font-size: 40;
+  font-size: 60px;
+  font-family: 'Lobster-Regular';
   color: ${({theme}) => theme.colors.white};
 `;
