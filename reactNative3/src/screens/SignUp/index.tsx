@@ -2,10 +2,10 @@ import React from 'react';
 import {Text} from 'react-native';
 import {Container} from './styles';
 
-export const Preload = () => {
+export const SignUp = () => {
   return (
     <Container>
-      <Text>PreloaderScreen</Text>
+      <Text>SignUp Screen</Text>
     </Container>
   );
 };
