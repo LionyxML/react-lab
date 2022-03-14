@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -21,22 +21,58 @@ const useAPI = (): typeof hookReturn => {
   return hookReturn;
 };
 
-const useFetchPeople = () => {
+const useFetchPeople = (searchString: string) => {
   const { apiFetchPeople } = useAPI();
 
   return useQuery("getPeople", async () => {
-    return apiFetchPeople("skywalker");
+    return apiFetchPeople(searchString);
   });
 };
 
 export const App: React.FC = () => {
-  const { status, data, isFetching } = useFetchPeople();
+  const [searchFor, setSearchFor] = useState("yoda");
+  const { status, data, isFetching, refetch } = useFetchPeople(searchFor);
+
+  useEffect(() => {
+    refetch();
+  }, [searchFor, refetch]);
 
   return (
     <>
       <h1>Testing react-query package.</h1>
-      <button type="button">Make Request 1</button>
-      <button type="button">Make Request 1 from other function</button>
+      <button
+        type="button"
+        onClick={() => {
+          setSearchFor("darth");
+        }}
+      >
+        search for Darth!
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setSearchFor("anakin");
+        }}
+      >
+        search For Anakin!
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setSearchFor("anakin");
+        }}
+      >
+        search For Anakin again!
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          refetch();
+        }}
+      >
+        refetch
+      </button>
       <p>Response:</p>
       <div>{isFetching ? "Loading..." : ""} </div>
       <div>{status}</div>
