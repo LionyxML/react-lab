@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "react-query": "^3.34.16"
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^17.1.2",
+    "react-query": "^3.34.16",
+    "wait-on": "^6.0.1"
   }
 }
